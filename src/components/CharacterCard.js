@@ -8,7 +8,7 @@ export default function CharacterCard({ character, toggleRecruit, removeCharacte
     <Card style={styles.card}>
       <View style={styles.content}>
         <View style={styles.iconCol}>
-          <MaterialCommunityIcons name="dice-multiple" size={32} color="#d32f2f" style={styles.icon} />
+          <MaterialCommunityIcons name="cards-playing-spade-multiple" size={36} color="#FFD700" style={styles.icon} />
         </View>
         <View style={styles.infoCol}>
           <Text style={styles.name}>{character.name}</Text>
@@ -16,25 +16,25 @@ export default function CharacterCard({ character, toggleRecruit, removeCharacte
           <View style={styles.row}>
             <Text style={styles.label}>Classe: </Text>
             <Text style={styles.value}>{character.classe}</Text>
-            <Text style={styles.label}>  |  Elemento: </Text>
+            <Text style={styles.label}>  |  Raça: </Text>
             <Text style={styles.value}>{character.elemento}</Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.label}>NEX: </Text>
+            <Text style={styles.label}>Nível: </Text>
             <Text style={styles.value}>{character.nex}</Text>
           </View>
         </View>
         <View style={styles.actionsCol}>
           <TouchableOpacity onPress={() => toggleRecruit(character)}>
             <MaterialCommunityIcons
-              name={character.recruited ? "check-circle" : "plus-circle"}
-              size={30}
-              color={character.recruited ? "#43ea5e" : "#d32f2f"}
+              name={character.recruited ? "crown" : "sword-cross"}
+              size={32}
+              color={character.recruited ? "#32CD32" : "#DAA520"}
               style={styles.actionIcon}
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => removeCharacter(character)}>
-            <MaterialCommunityIcons name="delete" size={28} color="#d32f2f" style={styles.actionIcon} />
+            <MaterialCommunityIcons name="delete" size={28} color="#B22222" style={styles.actionIcon} />
           </TouchableOpacity>
         </View>
       </View>
@@ -44,16 +44,16 @@ export default function CharacterCard({ character, toggleRecruit, removeCharacte
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#18181a',
-    borderRadius: 18,
-    marginBottom: 8,
-    elevation: 8,
-    shadowColor: '#d32f2f',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
-    shadowRadius: 10,
-    borderWidth: 2,
-    borderColor: '#d32f2f',
+    backgroundColor: '#2F1B69',
+    borderRadius: 20,
+    marginBottom: 15,
+    elevation: 15,
+    shadowColor: '#FFD700',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.8,
+    shadowRadius: 20,
+    borderWidth: 4,
+    borderColor: '#DAA520',
   },
   content: {
     flexDirection: "row",
@@ -70,19 +70,21 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   name: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 2,
-    textShadowColor: '#d32f2f',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
+    fontSize: 24,
+    fontWeight: '900',
+    color: '#FFD700',
+    marginBottom: 4,
+    textShadowColor: '#4B0082',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 6,
+    letterSpacing: 1,
   },
   desc: {
-    color: '#f8b4b4',
-    fontSize: 15,
-    marginBottom: 2,
+    color: '#E6E6FA',
+    fontSize: 16,
+    marginBottom: 6,
     fontStyle: 'italic',
+    fontWeight: '500',
   },
   row: {
     flexDirection: 'row',
@@ -91,14 +93,18 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   label: {
-    color: '#d32f2f',
+    color: '#DAA520',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 15,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
   value: {
-    color: '#fff',
-    fontSize: 14,
+    color: '#FFFFFF',
+    fontSize: 15,
     marginRight: 8,
+    fontWeight: '600',
   },
   actionsCol: {
     marginLeft: 8,

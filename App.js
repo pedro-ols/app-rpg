@@ -33,7 +33,7 @@ export default function App() {
       return currentChar;
     });
     setCharacters(updatedCharacters);
-    showSnackbar(`${character.name} foi ${character.recruited ? "dispensado" : "recrutado"}!`);
+    showSnackbar(`${character.name} ${character.recruited ? "saiu da aventura" : "juntou-se à aventura"}!`);
   }
 
   function addCharacter() {
@@ -64,7 +64,7 @@ export default function App() {
     setElemento("");
     setNex("");
     setAddModalVisible(false);
-    showSnackbar(`${newChar.name} foi adicionado!`);
+    showSnackbar(`${newChar.name} chegou à taverna!`);
   }
 
   function removeCharacter(character) {
@@ -76,7 +76,7 @@ export default function App() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setCharacters(characters.filter((char) => char.id !== character.id));
     setRemoveModal({ visible: false, character: null });
-    showSnackbar(`${character.name} foi removido!`);
+    showSnackbar(`${character.name} foi banido da taverna!`);
   }
 
   function showSnackbar(message) {
@@ -94,11 +94,24 @@ export default function App() {
     <SafeAreaProvider>
       <PaperProvider>
         <SafeAreaView style={styles.container}>
-          <Header title="Minha Party RPG" subtitle="Recrutado | Disponível | Segure para remover" />
-          <View style={styles.filterRow}>
-            <Button title="Todos" onPress={() => setFilter('all')} color={filter==='all'? '#d32f2f': '#222'} />
-            <Button title="Recrutados" onPress={() => setFilter('recruited')} color={filter==='recruited'? '#d32f2f': '#222'} />
-            <Button title="Disponíveis" onPress={() => setFilter('available')} color={filter==='available'? '#d32f2f': '#222'} />
+          <Header title="🏰 A TAVERNA DO DRAGÃO DOURADO 🏰" subtitle="⚔️ Registro de Aventureiros • Clique para recrutar • Segure para banir ⚔️" />
+          
+          <View style={styles.tavernSection}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>📜 SALÃO PRINCIPAL 📜</Text>
+            </View>
+            
+            <View style={styles.filterRow}>
+              <View style={styles.filterButton}>
+                <Button title="🏛️ TODOS" onPress={() => setFilter('all')} color={filter==='all'? '#8B0000': '#654321'} />
+              </View>
+              <View style={styles.filterButton}>
+                <Button title="⚔️ EM AVENTURA" onPress={() => setFilter('recruited')} color={filter==='recruited'? '#8B0000': '#654321'} />
+              </View>
+              <View style={styles.filterButton}>
+                <Button title="🍺 NA TAVERNA" onPress={() => setFilter('available')} color={filter==='available'? '#8B0000': '#654321'} />
+              </View>
+            </View>
           </View>
           <AddCharacterForm
             newCharacter={newCharacter}
@@ -131,18 +144,19 @@ export default function App() {
             visible={snackbarVisible}
             onDismiss={() => setSnackbarVisible(false)}
             duration={3000}
-            style={{ backgroundColor: '#d32f2f' }}
+            style={{ backgroundColor: '#8B4513' }}
           >
             {snackbarMessage}
           </Snackbar>
           {addModalVisible && (
             <View style={styles.modalOverlay}>
               <View style={styles.modalBox}>
-                <Text style={{ fontSize: 20, marginBottom: 10, color: '#d32f2f', fontWeight: 'bold' }}>Adicionar personagem?</Text>
-                <Text style={{ marginBottom: 20, color: '#fff' }}>{newCharacter}</Text>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: 10 }}>
-                  <Button title="Cancelar" onPress={() => setAddModalVisible(false)} color="#888" />
-                  <Button title="Adicionar" onPress={confirmAddCharacter} color="#d32f2f" />
+                <Text style={styles.modalTitle}>🏰 ACEITAR NOVO AVENTUREIRO? 🏰</Text>
+                <Text style={styles.modalSubtitle}>Nome: {newCharacter}</Text>
+                <Text style={styles.modalText}>Este bravo aventureiro deseja se juntar à sua guilda!</Text>
+                <View style={styles.modalButtons}>
+                  <Button title="❌ RECUSAR" onPress={() => setAddModalVisible(false)} color="#8B4513" />
+                  <Button title="⚔️ ACEITAR" onPress={confirmAddCharacter} color="#8B0000" />
                 </View>
               </View>
             </View>
@@ -150,11 +164,12 @@ export default function App() {
           {removeModal.visible && (
             <View style={styles.modalOverlay}>
               <View style={styles.modalBox}>
-                <Text style={{ fontSize: 20, marginBottom: 10, color: '#d32f2f', fontWeight: 'bold' }}>Deseja mesmo remover esse personagem?</Text>
-                <Text style={{ marginBottom: 20, color: '#fff' }}>{removeModal.character?.name}</Text>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: 10 }}>
-                  <Button title="Cancelar" onPress={() => setRemoveModal({ visible: false, character: null })} color="#888" />
-                  <Button title="Remover" onPress={confirmRemoveCharacter} color="#d32f2f" />
+                <Text style={styles.modalTitle}>⚠️ BANIR AVENTUREIRO? ⚠️</Text>
+                <Text style={styles.modalSubtitle}>Nome: {removeModal.character?.name}</Text>
+                <Text style={styles.modalText}>Este aventureiro será permanentemente banido da taverna!</Text>
+                <View style={styles.modalButtons}>
+                  <Button title="🛡️ PERDOAR" onPress={() => setRemoveModal({ visible: false, character: null })} color="#8B4513" />
+                  <Button title="⚔️ BANIR" onPress={confirmRemoveCharacter} color="#8B0000" />
                 </View>
               </View>
             </View>
@@ -168,17 +183,53 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    padding: 20,
+    backgroundColor: "#1A0E0A",
+    padding: 15,
   },
   list: {
     flex: 1,
   },
+  tavernSection: {
+    backgroundColor: '#2C1810',
+    borderRadius: 15,
+    borderWidth: 3,
+    borderColor: '#8B4513',
+    marginBottom: 20,
+    padding: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+    elevation: 10,
+  },
+  sectionHeader: {
+    alignItems: 'center',
+    marginBottom: 15,
+    borderBottomWidth: 2,
+    borderBottomColor: '#D4A574',
+    paddingBottom: 10,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#F5DEB3',
+    letterSpacing: 2,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
   filterRow: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 12,
-    marginBottom: 18,
+    justifyContent: 'space-between',
+    gap: 8,
+  },
+  filterButton: {
+    flex: 1,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#D4A574',
+    backgroundColor: '#3D2817',
+    overflow: 'hidden',
   },
   modalOverlay: {
     position: 'absolute',
@@ -189,14 +240,44 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   modalBox: {
-    backgroundColor: '#1a1a1a',
-    borderRadius: 16,
-    padding: 28,
-    minWidth: 270,
-    elevation: 8,
-    shadowColor: '#d32f2f',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
-    shadowRadius: 10,
+    backgroundColor: '#F4E4BC',
+    borderRadius: 15,
+    padding: 25,
+    minWidth: 320,
+    elevation: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.7,
+    shadowRadius: 15,
+    borderWidth: 4,
+    borderColor: '#8B4513',
+    position: 'relative',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#8B0000',
+    textAlign: 'center',
+    marginBottom: 10,
+    letterSpacing: 1,
+  },
+  modalSubtitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#8B4513',
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  modalText: {
+    fontSize: 14,
+    color: '#654321',
+    textAlign: 'center',
+    marginBottom: 20,
+    fontStyle: 'italic',
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 15,
   },
 });
